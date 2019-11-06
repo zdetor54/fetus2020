@@ -1,15 +1,19 @@
 <p>
-    {% if name%}
-    The name you entered is {{name}}
-    update it in the below form
+    {% if first_name %}
+    Ο ασθενής ονομάζεται {{first_name}} {{surname}} του {{fathers_name}}
+    <br/>
+    οικογενειακή κατάσταση: {{marital_status}}
     {% else %}
-    Please enter your name:
+    Παρακαλώ εισάγετε τα στοιχεία στην παρακάτω φόρμα
     {% endif %}
 </p>
 
 <form method="POST">
     {{form.hidden_tag()}}
-    {{form.name.label}}{{form.name}}
+    {{form.first_name.label}}{{form.first_name}} {{form.fathers_name}} {{form.surname}}
+    <br/>
+    {{form.marital_status.label}}{{form.marital_status()}}
+    <br/>
     {{form.submit}}
 
 </form>
