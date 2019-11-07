@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, session, url_for, redirect, flash
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, DateField, DateTimeField, BooleanField, TextAreaField, SelectField
 
@@ -6,7 +6,7 @@ app = Flask(__name__)
 
 app.config["SECRET_KEY"] = "mySecretKey"
 
-class CustomerInfoForm(FlaskForm):
+class PersonalInfo(FlaskForm):
     submit = SubmitField("Υποβολή")
     first_name = StringField("Ονομα")
     surname = StringField('Επώνυμο')
@@ -24,7 +24,7 @@ class CustomerInfoForm(FlaskForm):
     mobile_phone = StringField('Κινητό')
     alternative_phone = StringField('Εναλλακτικό Τηλ.')
     email = StringField('E-mail')
-    insurance = SelectField('Ασφάλιση', choices=[('unknown',''),('eopy','ΕΟΠΥΥ'),('private','Ιδιωτική Ασφάλεια')])
+    insurance = SelectField('Ασφάλιση', choices=[('unknown',' '),('eopy','ΕΟΠΥΥ'),('private','Ιδιωτική Ασφάλεια')])
     insurance_comment = TextAreaField()
     amka = StringField('ΑΜΚΑ')
     spouseName = StringField('Ονοματεπώνυμο')
@@ -33,19 +33,21 @@ class CustomerInfoForm(FlaskForm):
 
 @app.route("/", methods=["GET","POST"])
 def index():
-    first_name = True
-    surname = 'False'
-    fathers_name = 'False'
-    marital_status = 'False'
-
-    form = CustomerInfoForm()
+    form = PersonalInfo()
 
     if form.validate_on_submit():
-        first_name = form.first_name.data
-        # surname = form.surname.data
-        # fathers_name = form.fathers_name.data
-        # marital_status = form.marital_status.data
-    return render_template ("index.html", form = form, first_name = first_name, surname = surname, fathers_name = fathers_name, marital_status = marital_status)
+        session['first_name'] = form.first_name.data
+        session['surname'] = form.surname.data
+        session['fathers_name'] = form.fathers_name.data
+        session['marital_status'] = form.marital_status.data
+        session['insurance'] = form.insurance.data
+        flash('The record has been created')
+        return redirect(url_for('personaldetails'))
+    return render_template ("index.html", form = form)
+
+@app.route('/personaldetails')
+def personaldetails():
+    return render_template("personaldetails.html")
 
 if __name__ == "__main__":
     app.run(debug=True)
