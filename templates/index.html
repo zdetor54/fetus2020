@@ -10,7 +10,7 @@
 
 <form method="POST">
     {{form.hidden_tag()}}
-    {{form.first_name.label}}{{form.first_name}}{{form.surname}}{{form.fathers_name}}
+    {{form.first_name.label}}{{form.first_name()}}{{form.surname()}}{{form.fathers_name()}}
     <br/>
     {{form.marital_status.label}}{{form.marital_status()}}
     <br/>

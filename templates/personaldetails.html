@@ -9,12 +9,13 @@
 
 {% for mess in get_flashed_messages()  %}
 <div class="alert alert-warning alert-dismissible fade show" role="alert">
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close" class="fade close">
-      <span aria-hidden="true">&times;</span>
-    </button>
-    {{mess}}
-    </div>
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close" class="fade close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+  {{mess}}
+</div>
 {% endfor %}
 
-<p>Thanks!</p>
-{{session['first_name']}}
+<p>This is where you render the form</p>
+<p>Ονοματεπώνυμο Ασθενούς: {{session['first_name']}} {{session['surname']}} του {{session['fathers_name']}}</p>
+<p>Οικογενειακή Κατάσταση: {{session['marital_status']}}</p>
