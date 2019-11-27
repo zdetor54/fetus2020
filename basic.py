@@ -32,7 +32,7 @@ class CUSTOMER(db.Model):
     def __init__(self,first_name):
         self.first_name = first_name
 
-    def __repr__(self):
+    def __repr__Q(self):
         return f"The customer name is {self.first_name}."
 
 
